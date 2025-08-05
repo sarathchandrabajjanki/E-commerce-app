@@ -1,8 +1,12 @@
+// Home.jsx
 import React, { useEffect, useState } from "react";
 import "./Home.css";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [data, setData] = useState([]);
+  const [cart, setCart] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
@@ -16,6 +20,15 @@ function Home() {
     }
     fetchData();
   }, []);
+
+  function handleAddToCart(product) {
+    const exists = cart.find((item) => item.id === product.id);
+    if (exists) {
+      alert("Already added to cart");
+    } else {
+      setCart([...cart, product]);
+    }
+  }
 
   return (
     <div className="home-container">
@@ -31,10 +44,27 @@ function Home() {
                 {item.description}
               </p>
               <button className="buy-now">Buy Now</button>
+              <button onClick={() => handleAddToCart(item)}>Add to Cart</button>
             </div>
           </div>
         ))}
       </div>
+
+      {cart.length > 0 && (
+        <div className="cart-section">
+          <h2>🛒 Cart</h2>
+          {cart.map((item) => (
+            <div className="cart-item" key={item.id}>
+              <img src={item.image} alt={item.title} />
+              <div className="cart-item-details">
+                <h3>{item.title}</h3>
+                <p><strong>Price:</strong> ${item.price}</p>
+                <p>{item.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
