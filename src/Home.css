@@ -4,12 +4,15 @@ body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #f4f4f4;
+  height: 100%;
+  
 }
 
 .home-container {
   padding: 40px;
   max-width: 1200px;
   margin: auto;
+  
 }
 
 .home-heading {
